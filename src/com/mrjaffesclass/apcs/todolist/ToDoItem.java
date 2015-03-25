@@ -19,30 +19,21 @@ public class ToDoItem {
   private String date;
   
   /**
-   * Constructor with done set to false in constructor
-   * @param _id           ID number of to do item
-   * @param _description  Description of to do item
-   */
-  public ToDoItem(int _id, String _description) {
-    description = _description;
-    id = _id;
-    done = false;     // Default to not completed
-  } 
-  
-  /**
-   * Constructor
+   * Constructor including date and completed parameter
    * @param _id           ID number of to do item
    * @param _description  Description of to do item
    * @param _done         Done flag
+   * @param _date         Date of item
    */
-  public ToDoItem(int _id, String _description, boolean _done) {
+  public ToDoItem(int _id, String _description, boolean _done, String _date) {
     description = _description;
     id = _id;
     done = _done;     
-  }
+    date = _date;
+  } 
   
   /**
-   * Constructor including date
+   * Constructor including date, not done default
    * @param _id ID number of to do item
    * @param _description Description of to do item
    * @param _date Date of item

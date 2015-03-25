@@ -55,6 +55,7 @@ public class EditView extends javax.swing.JDialog implements MessageHandler {
   private void setFieldValues() {
     descriptionText.setText(item.getDescription());
     completedCheckBox.setSelected(item.isDone());
+    dateField.setText(item.getDate());
   }
   
   /**
