@@ -39,7 +39,7 @@ public class ToDoItemTest {
    */
   @Test
   public void testToDoItem1() {
-    ToDoItem item = new ToDoItem(-1, "Test description");
+    ToDoItem item = new ToDoItem(-1, "Test description", null);
     assertEquals("getDescription", "Test description", item.getDescription());
     assertEquals("getId", -1, item.getId());
     assertFalse("getDone", item.isDone());
@@ -50,7 +50,7 @@ public class ToDoItemTest {
    */
   @Test
   public void testToDoItem2() {
-    ToDoItem item = new ToDoItem(-1, "Test description 2", true);
+    ToDoItem item = new ToDoItem(-1, "Test description 2", true, null);
     assertEquals("getDescription", "Test description 2", item.getDescription());
     assertEquals("getId", -1, item.getId());
     assertTrue("getDone", item.isDone());
@@ -61,7 +61,7 @@ public class ToDoItemTest {
    */
   @Test
   public void testGetId() {
-    ToDoItem item = new ToDoItem(22, "Test description");
+    ToDoItem item = new ToDoItem(22, "Test description", null);
     assertEquals("getId", 22, item.getId());
   }
 
@@ -70,7 +70,7 @@ public class ToDoItemTest {
    */
   @Test
   public void testGetDescription() {
-    ToDoItem item = new ToDoItem(2, "Test description");
+    ToDoItem item = new ToDoItem(2, "Test description", null);
     assertEquals("getDescription", "Test description", item.getDescription());
   }
 
@@ -79,7 +79,7 @@ public class ToDoItemTest {
    */
   @Test
   public void testSetDescription() {
-    ToDoItem item = new ToDoItem(2, "Test description");
+    ToDoItem item = new ToDoItem(2, "Test description", null);
     item.setDescription("A new description");
     assertEquals("setDescription", "A new description", item.getDescription());
   }
@@ -89,7 +89,7 @@ public class ToDoItemTest {
    */
   @Test
   public void testIsDone() {
-    ToDoItem item = new ToDoItem(2, "Test description");
+    ToDoItem item = new ToDoItem(2, "Test description", null);
     assertFalse("isDone", item.isDone());
   }
   
@@ -98,7 +98,7 @@ public class ToDoItemTest {
    */
   @Test
   public void testSetDone() {
-    ToDoItem item = new ToDoItem(2, "Test description");
+    ToDoItem item = new ToDoItem(2, "Test description", null);
     item.setDone(true);
     assertTrue("setDone set done to true", item.isDone());
     item.setDone(false);
@@ -110,7 +110,7 @@ public class ToDoItemTest {
    */
   @Test
   public void testToggleDone() {
-    ToDoItem item = new ToDoItem(2, "Test description", true);
+    ToDoItem item = new ToDoItem(2, "Test description", true, null);
     item.toggleDone();
     assertFalse("setDone set done to false", item.isDone());
     item.toggleDone();

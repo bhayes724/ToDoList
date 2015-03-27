@@ -21,7 +21,7 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
   
   private final int DONE_FIELD_WIDTH = 65;
   private final int DESCRIPTION_FIELD_WIDTH = 475;
-  private final int DATE_FIELD_WIDTH = 100;
+  private final int DATE_FIELD_WIDTH = 150;
   private final int ROW_HEIGHT = 25;
   
   private final int X_POSITION = 100;
@@ -44,6 +44,7 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
     jTable1.getColumnModel().getColumn(DONE_FIELD).setPreferredWidth(DONE_FIELD_WIDTH);  // Set width of checkbox column
     jTable1.getColumnModel().getColumn(DESCRIPTION_FIELD).setPreferredWidth(DESCRIPTION_FIELD_WIDTH);
     jTable1.getColumnModel().getColumn(DATE_FIELD).setPreferredWidth(DATE_FIELD_WIDTH);
+    jTable1.getColumnModel().getColumn(DATE_FIELD).setCellRenderer(null);
     jTable1.removeColumn(jTable1.getColumnModel().getColumn(ID_FIELD));  // Remove the ID column from the table
     jTable1.setRowHeight(ROW_HEIGHT);
   }
@@ -135,7 +136,7 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
       (int)tableModel.getValueAt(row, ID_FIELD),
       (String)tableModel.getValueAt(row, DESCRIPTION_FIELD),
       (boolean)tableModel.getValueAt(row, DONE_FIELD),
-      (String)tableModel.getValueAt(row, DATE_FIELD)      
+      (Date)tableModel.getValueAt(row, DATE_FIELD)      
     );
     return item;
   }
@@ -166,7 +167,7 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Boolean.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -181,6 +182,9 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
             }
         });
         jScrollPane2.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(3).setCellRenderer(null);
+        }
 
         newItemBtn.setText("New");
         newItemBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -250,7 +254,7 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
   }//GEN-LAST:event_jTable1MouseClicked
 
   private void newItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newItemBtnActionPerformed
-    ToDoItem item = new ToDoItem(-1, "New to do item", false, "");
+    ToDoItem item = new ToDoItem(-1, "New to do item", false, null);
     editItem(item);
   }//GEN-LAST:event_newItemBtnActionPerformed
 

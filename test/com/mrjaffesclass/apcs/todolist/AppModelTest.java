@@ -48,7 +48,7 @@ public class AppModelTest {
     
     this.testArrayList = new ArrayList<>();
     for (int i=0; i<initialData.length; i++) {
-      testArrayList.add(new ToDoItem(-1, initialData[i]));
+      testArrayList.add(new ToDoItem(-1, initialData[i], null));
     }
   }
   
@@ -95,7 +95,7 @@ public class AppModelTest {
    */
   @Test
   public void testPutItem1() {
-    ToDoItem newItem = new ToDoItem(-1, "This is added item 1");
+    ToDoItem newItem = new ToDoItem(-1, "This is added item 1", null);
     ToDoItem addedItem = model.putItem(newItem);
     assertEquals("testPutItem1: Item returned", addedItem, newItem);
     assertEquals("testPutItem1: Item description", "This is added item 1", newItem.getDescription());
@@ -107,8 +107,8 @@ public class AppModelTest {
   @Test
   public void testPutItem2() {
     ToDoItem item;
-    ToDoItem newItem = model.putItem(new ToDoItem(-1, "This is item 1"));
-    newItem = model.putItem(new ToDoItem(-1, "This is item 2"));
+    ToDoItem newItem = model.putItem(new ToDoItem(-1, "This is item 1", null));
+    newItem = model.putItem(new ToDoItem(-1, "This is item 2", null));
     assertEquals("testPutItem2: Item count = 2", 7, model.getItems().size());
   }
   
@@ -157,7 +157,7 @@ public class AppModelTest {
   */
   public AppModel addSampleItems(AppModel model) {
     for (String description : initialData) {
-      model.putItem (new ToDoItem(-1, description));
+      model.putItem (new ToDoItem(-1, description, null));
     }
     return model;
   }

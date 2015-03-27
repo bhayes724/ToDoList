@@ -1,4 +1,7 @@
 package com.mrjaffesclass.apcs.todolist;
+
+import java.util.Date;
+
 /**
  * To do item
  * 
@@ -16,7 +19,7 @@ public class ToDoItem {
   private int id;               
   private String description;
   private boolean done;
-  private String date;
+  private Date date;
   
   /**
    * Constructor including date and completed parameter
@@ -25,7 +28,7 @@ public class ToDoItem {
    * @param _done         Done flag
    * @param _date         Date of item
    */
-  public ToDoItem(int _id, String _description, boolean _done, String _date) {
+  public ToDoItem(int _id, String _description, boolean _done, Date _date) {
     description = _description;
     id = _id;
     done = _done;     
@@ -38,7 +41,7 @@ public class ToDoItem {
    * @param _description Description of to do item
    * @param _date Date of item
    */
-  public ToDoItem(int _id, String _description, String _date) {
+  public ToDoItem(int _id, String _description, Date _date) {
     description = _description;
     id = _id;
     done = false;     // Default to not completed
@@ -104,7 +107,7 @@ public class ToDoItem {
    * Get the to do item date
    * @return Date of the to do item
    */
-  public String getDate() {
+  public Date getDate() {
     return date;
   }
   
@@ -112,7 +115,7 @@ public class ToDoItem {
    * Sets the date of the to do item. Can only be called from inside this class
    * @param _date Date to be set
    */
-  public void setDate(String _date) {
+  public void setDate(Date _date) {
     this.date = _date;
   }
   
