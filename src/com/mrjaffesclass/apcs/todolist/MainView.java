@@ -1,8 +1,9 @@
 package com.mrjaffesclass.apcs.todolist;
 
+import com.mrjaffesclass.apcs.messenger.*;
+import java.text.DateFormat;
 import java.util.*;
 import javax.swing.table.*;
-import com.mrjaffesclass.apcs.messenger.*;
 /**
  * To do list main view
  * @author Roger Jaffe
@@ -101,7 +102,15 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
       tableModel.setValueAt(item.getId(), i, ID_FIELD);
       tableModel.setValueAt(item.isDone(), i, DONE_FIELD);
       tableModel.setValueAt(item.getDescription(), i, DESCRIPTION_FIELD);
-      tableModel.setValueAt(item.getDate(), i, DATE_FIELD);
+      if(item.getDate() != null){
+        Date today = item.getDate();
+        String dateOut;
+        DateFormat df;
+        df = DateFormat.getDateInstance(DateFormat.DEFAULT);
+        dateOut = df.format(today);
+        tableModel.setValueAt(dateOut, i, DATE_FIELD);
+      }
+      
     }
 }
   
@@ -167,11 +176,18 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Boolean.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jTable1.getTableHeader().setResizingAllowed(false);
@@ -182,9 +198,6 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
             }
         });
         jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(3).setCellRenderer(null);
-        }
 
         newItemBtn.setText("New");
         newItemBtn.addActionListener(new java.awt.event.ActionListener() {
