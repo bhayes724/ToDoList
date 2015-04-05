@@ -2,6 +2,7 @@ package com.mrjaffesclass.apcs.todolist;
 
 import com.mrjaffesclass.apcs.messenger.*;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.table.*;
 /**
@@ -102,11 +103,12 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
       tableModel.setValueAt(item.getId(), i, ID_FIELD);
       tableModel.setValueAt(item.isDone(), i, DONE_FIELD);
       tableModel.setValueAt(item.getDescription(), i, DESCRIPTION_FIELD);
+      //display formatted date, do nothing if no date present
       if(item.getDate() != null){
         Date today = item.getDate();
         String dateOut;
-        DateFormat df;
-        df = DateFormat.getDateInstance(DateFormat.DEFAULT);
+        SimpleDateFormat df;
+        df = new SimpleDateFormat("EEE MM/dd");
         dateOut = df.format(today);
         tableModel.setValueAt(dateOut, i, DATE_FIELD);
       }
@@ -164,6 +166,9 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
         newItemBtn = new javax.swing.JButton();
         aboutBtn = new javax.swing.JButton();
         removeCompleteItemsBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        sortUpButton = new javax.swing.JButton();
+        sortDownButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -220,6 +225,22 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
             }
         });
 
+        jLabel1.setText("Sort by Date:");
+
+        sortUpButton.setText("^");
+        sortUpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortUpButtonActionPerformed(evt);
+            }
+        });
+
+        sortDownButton.setText("v");
+        sortDownButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortDownButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -229,8 +250,17 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
                 .addGap(38, 38, 38)
                 .addComponent(removeCompleteItemsBtn)
                 .addGap(175, 175, 175)
-                .addComponent(aboutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(aboutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jScrollPane2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sortUpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sortDownButton)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,8 +270,13 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
                     .addComponent(newItemBtn)
                     .addComponent(aboutBtn)
                     .addComponent(removeCompleteItemsBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(sortUpButton)
+                    .addComponent(sortDownButton))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -280,15 +315,26 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
     dialog.setVisible(true);
   }//GEN-LAST:event_aboutBtnActionPerformed
 
+    private void sortUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortUpButtonActionPerformed
+        messenger.notify("sortUp");
+    }//GEN-LAST:event_sortUpButtonActionPerformed
+
+    private void sortDownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortDownButtonActionPerformed
+        messenger.notify("sortDown");
+    }//GEN-LAST:event_sortDownButtonActionPerformed
+
   /**
    * @param args the command line arguments
    */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aboutBtn;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton newItemBtn;
     private javax.swing.JButton removeCompleteItemsBtn;
+    private javax.swing.JButton sortDownButton;
+    private javax.swing.JButton sortUpButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -39,6 +39,8 @@ public class AppModel implements MessageHandler {
     messenger.subscribe("saveItem", this);
     messenger.subscribe("deleteItem", this);
     messenger.subscribe("removeCompletedItems", this);
+    messenger.subscribe("sortDown", this);
+    messenger.subscribe("sortUp", this);
   }
 
   // This method implements the messageHandler method defined in
@@ -91,6 +93,9 @@ public class AppModel implements MessageHandler {
         removeCompletedItems();
         messenger.notify("saved");
         messenger.notify("items", this.getItems());
+          
+      case "sortDown":
+        messenger.notify("items", this.sort(toDoList));
     }
   }
 
@@ -185,5 +190,71 @@ public class AppModel implements MessageHandler {
     for (ToDoItem item : newList) {
       toDoList.add(item);
     }
+  }
+  
+  /**
+   * Sorts ArrayList by date using merge method
+   * @param a ArrayList of ToDoItems to be sorted
+   * @return sorted ArrayList
+   */
+  public ArrayList<ToDoItem> sort(ArrayList<ToDoItem> a){
+      if(a.size() <= 1)
+          return a;
+      int middle = a.size() / 2;
+      ArrayList<ToDoItem> left = new ArrayList();
+      ArrayList<ToDoItem> right = new ArrayList();
+      ArrayList<ToDoItem> leftovers = new ArrayList();
+      for (ToDoItem a1 : a) {
+        if(a1.getDate() == null){
+          leftovers.add(a1);
+        }
+        else{ 
+          if(a.indexOf(a1) < middle)
+            left.add((ToDoItem)a1);
+          else
+            right.add((ToDoItem)a1);
+        }   
+      }
+      left = sort(left);
+      right = sort(right);
+      ArrayList result = merge(left, right);
+      result.addAll(leftovers);
+      return result;
+  }
+  
+  /**
+   * Used in conjunction with sort method to sort list of items by date
+   * @param left 1st half of split ArrayList
+   * @param right 2nd half of split ArrayList
+   * @return merged ArrayList
+   */
+  public ArrayList<ToDoItem> merge(ArrayList<ToDoItem> left, ArrayList<ToDoItem> right){
+    ArrayList<ToDoItem> result = new ArrayList();
+    int leftIndex = 0;
+    int rightIndex = 0;
+    int len = left.size() + right.size();
+    for(int i = 0; i < len; i++){
+        if((leftIndex < left.size()) && (rightIndex < right.size())){
+            if(left.get(leftIndex).getDate().compareTo(right.get(rightIndex).getDate()) < 0){
+                result.add(left.get(leftIndex));
+                leftIndex++;
+            }
+            else{
+                result.add(right.get(rightIndex));
+                rightIndex++;
+            }
+        }
+        else{
+            if(leftIndex >= left.size()){
+                result.add(right.get(rightIndex));
+                rightIndex++;
+            }
+            else{
+                result.add(left.get(leftIndex));
+                leftIndex++;
+            }
+        }
+    }
+    return result;
   }
 }
