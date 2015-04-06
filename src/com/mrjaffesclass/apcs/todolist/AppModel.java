@@ -95,7 +95,8 @@ public class AppModel implements MessageHandler {
         messenger.notify("items", this.getItems());
           
       case "sortDown":
-        messenger.notify("items", this.sort(toDoList));
+        ArrayList sortList = sort(this.getItems());
+        messenger.notify("items", sortList, true);
     }
   }
 
@@ -184,7 +185,6 @@ public class AppModel implements MessageHandler {
         newList.add(item);
       }
     }
-    
     // Clear the to do list and add the items that were not completed
     toDoList.clear();
     for (ToDoItem item : newList) {
