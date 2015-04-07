@@ -2,8 +2,11 @@ package com.mrjaffesclass.apcs.todolist;
 
 import com.mrjaffesclass.apcs.messenger.*;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.*;
 /**
  * To do list main view
@@ -20,6 +23,7 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
   private final int DATE_FIELD = 3;
   
   private final int DONE_COLUMN = 0;
+  private final int DATE_COLUMN = 3;
   
   private final int DONE_FIELD_WIDTH = 65;
   private final int DESCRIPTION_FIELD_WIDTH = 475;
@@ -106,10 +110,8 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
       //display formatted date, do nothing if no date present
       if(item.getDate() != null){
         Date today = item.getDate();
-        String dateOut;
-        SimpleDateFormat df;
-        df = new SimpleDateFormat("EEE MM/dd");
-        dateOut = df.format(today);
+        SimpleDateFormat df = new SimpleDateFormat("EEE MM/dd");
+        String dateOut = df.format(today);
         tableModel.setValueAt(dateOut, i, DATE_FIELD);
       }
       
@@ -141,13 +143,21 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
   private ToDoItem createItemFromTableModelRow(int row) {
     DefaultTableModel tableModel = (DefaultTableModel)jTable1.getModel();
     
+    String dateString = (String)tableModel.getValueAt(row, DATE_FIELD);
+    DateFormat format = new SimpleDateFormat("EEE MM/dd");
+    Date date = new Date();
+      try {
+          date = format.parse(dateString);
+      } catch (ParseException ex) {
+          Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+      }
     // Now create a ToDoItem that we can pass to the editing dialog
     // The done field is toggled when the user clicks the checkbox
     ToDoItem item = new ToDoItem(              
       (int)tableModel.getValueAt(row, ID_FIELD),
       (String)tableModel.getValueAt(row, DESCRIPTION_FIELD),
       (boolean)tableModel.getValueAt(row, DONE_FIELD),
-      (Date)tableModel.getValueAt(row, DATE_FIELD)      
+      date     
     );
     return item;
   }
@@ -296,7 +306,8 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
     // dialog so the item can be edited.
     if (col == DONE_COLUMN) {
       toggleDone(item);
-    } else {
+    } 
+    else {
       editItem(item);
     }
   }//GEN-LAST:event_jTable1MouseClicked

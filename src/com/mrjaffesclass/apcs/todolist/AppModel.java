@@ -96,6 +96,7 @@ public class AppModel implements MessageHandler {
           
       case "sortDown":
         ArrayList sortList = sort(this.getItems());
+        messenger.notify("saved", null, true);
         messenger.notify("items", sortList, true);
     }
   }
@@ -221,7 +222,19 @@ public class AppModel implements MessageHandler {
       result.addAll(leftovers);
       return result;
   }
-  
+  /**
+   * 
+   * @param a
+   * @return 
+   */
+  public ArrayList<ToDoItem> sortUp(ArrayList<ToDoItem> a){
+    ArrayList sortList = sort(a);
+    for(int i = 0; i < sortList.size(); i++){
+        ToDoItem tempItem = (ToDoItem)sortList.get(i);
+        
+    }
+    return null;
+  }
   /**
    * Used in conjunction with sort method to sort list of items by date
    * @param left 1st half of split ArrayList
