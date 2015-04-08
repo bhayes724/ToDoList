@@ -98,6 +98,13 @@ public class AppModel implements MessageHandler {
         ArrayList sortList = sort(this.getItems());
         messenger.notify("saved", null, true);
         messenger.notify("items", sortList, true);
+        refreshList(sortList);
+          
+      case "sortUp":
+        ArrayList sortListUp = sortUp(sort(this.getItems()));
+        messenger.notify("saved", null, true);
+        messenger.notify("items", sortListUp, true);
+        refreshList(sortListUp);
     }
   }
 
@@ -187,6 +194,14 @@ public class AppModel implements MessageHandler {
       }
     }
     // Clear the to do list and add the items that were not completed
+    refreshList(newList);
+  }
+  
+  /**
+   * Clears and replaces existing list
+   * @param newList list to replace existing list
+   */
+  public void refreshList(ArrayList<ToDoItem> newList){
     toDoList.clear();
     for (ToDoItem item : newList) {
       toDoList.add(item);
@@ -223,15 +238,15 @@ public class AppModel implements MessageHandler {
       return result;
   }
   /**
-   * 
-   * @param a
-   * @return 
+   * Sorts list and then inverts it
+   * @param a list to be sorted
+   * @return list sorted in reverse order
    */
   public ArrayList<ToDoItem> sortUp(ArrayList<ToDoItem> a){
     ArrayList sortList = sort(a);
-    for(int i = 0; i < sortList.size(); i++){
+    for(int i = 0; i < sortList.size() / 2; i++){
         ToDoItem tempItem = (ToDoItem)sortList.get(i);
-        
+        sortList.set(i , sortList.set(sortList.size() - (i + 1), tempItem));
     }
     return null;
   }

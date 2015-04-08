@@ -147,8 +147,10 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
     DateFormat format = new SimpleDateFormat("EEE MM/dd");
     Date date = new Date();
       try {
-          date = format.parse(dateString);
-      } catch (ParseException ex) {
+          if(dateString != null)
+            date = format.parse(dateString);
+      } 
+      catch (ParseException ex) {
           Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
       }
     // Now create a ToDoItem that we can pass to the editing dialog
