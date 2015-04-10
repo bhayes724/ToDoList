@@ -98,13 +98,11 @@ public class AppModel implements MessageHandler {
         ArrayList sortList = sort(this.getItems());
         messenger.notify("saved", null, true);
         messenger.notify("items", sortList, true);
-        refreshList(sortList);
-          
+      
       case "sortUp":
         ArrayList sortListUp = sortUp(sort(this.getItems()));
         messenger.notify("saved", null, true);
         messenger.notify("items", sortListUp, true);
-        refreshList(sortListUp);
     }
   }
 
@@ -244,11 +242,16 @@ public class AppModel implements MessageHandler {
    */
   public ArrayList<ToDoItem> sortUp(ArrayList<ToDoItem> a){
     ArrayList sortList = sort(a);
-    for(int i = 0; i < sortList.size() / 2; i++){
-        ToDoItem tempItem = (ToDoItem)sortList.get(i);
-        sortList.set(i , sortList.set(sortList.size() - (i + 1), tempItem));
+    int frontCounter = 0, rearCounter = sortList.size() - 1;
+    while(frontCounter < rearCounter){
+        if(sortList.get(frontCounter) != null && sortList.get(rearCounter) != null){
+            ToDoItem tempItem = (ToDoItem)sortList.get(frontCounter);
+            sortList.set(frontCounter , sortList.set(rearCounter, tempItem));
+            frontCounter++;
+            rearCounter--;
+        }
     }
-    return null;
+    return sortList;
   }
   /**
    * Used in conjunction with sort method to sort list of items by date
@@ -263,7 +266,7 @@ public class AppModel implements MessageHandler {
     int len = left.size() + right.size();
     for(int i = 0; i < len; i++){
         if((leftIndex < left.size()) && (rightIndex < right.size())){
-            if(left.get(leftIndex).getDate().compareTo(right.get(rightIndex).getDate()) < 0){
+            if(left.get(leftIndex).getDate().before(right.get(rightIndex).getDate())){
                 result.add(left.get(leftIndex));
                 leftIndex++;
             }
