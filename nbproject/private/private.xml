@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Bryan/Desktop/ToDoList/src/com/mrjaffesclass/apcs/todolist/EditView.java</file>
-            <file>file:/C:/Users/Bryan/Desktop/ToDoList/src/com/mrjaffesclass/apcs/todolist/ToDoItem.java</file>
-            <file>file:/C:/Users/Bryan/Desktop/ToDoList/src/com/mrjaffesclass/apcs/todolist/AboutView.java</file>
-            <file>file:/C:/Users/Bryan/Desktop/ToDoList/src/com/mrjaffesclass/apcs/todolist/MainView.java</file>
-            <file>file:/C:/Users/Bryan/Desktop/ToDoList/src/com/mrjaffesclass/apcs/todolist/AppController.java</file>
-            <file>file:/C:/Users/Bryan/Desktop/ToDoList/src/com/mrjaffesclass/apcs/todolist/AppModel.java</file>
+            <file>file:/C:/Users/student/Desktop/ToDoList/src/com/mrjaffesclass/apcs/todolist/MainView.java</file>
+            <file>file:/C:/Users/student/Desktop/ToDoList/src/com/mrjaffesclass/apcs/todolist/AppController.java</file>
+            <file>file:/C:/Users/student/Desktop/ToDoList/src/com/mrjaffesclass/apcs/todolist/AppModel.java</file>
+            <file>file:/C:/Users/student/Desktop/ToDoList/src/com/mrjaffesclass/apcs/todolist/ToDoItem.java</file>
+            <file>file:/C:/Users/student/Desktop/ToDoList/src/com/mrjaffesclass/apcs/todolist/EditView.java</file>
         </group>
     </open-files>
 </project-private>

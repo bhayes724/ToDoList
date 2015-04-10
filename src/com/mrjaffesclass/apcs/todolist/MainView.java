@@ -146,13 +146,13 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
     String dateString = (String)tableModel.getValueAt(row, DATE_FIELD);
     DateFormat format = new SimpleDateFormat("EEE MM/dd");
     Date date = new Date();
-      try {
-          if(dateString != null)
-            date = format.parse(dateString);
-      } 
-      catch (ParseException ex) {
-          Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-      }
+    try{
+        if(dateString != null)
+          date = format.parse(dateString);
+    } 
+    catch (ParseException ex){
+        Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+    }
     // Now create a ToDoItem that we can pass to the editing dialog
     // The done field is toggled when the user clicks the checkbox
     ToDoItem item = new ToDoItem(              

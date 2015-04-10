@@ -96,12 +96,10 @@ public class AppModel implements MessageHandler {
           
       case "sortDown":
         ArrayList sortList = sort(this.getItems());
-        messenger.notify("saved", null, true);
         messenger.notify("items", sortList, true);
       
       case "sortUp":
         ArrayList sortListUp = sortUp(sort(this.getItems()));
-        messenger.notify("saved", null, true);
         messenger.notify("items", sortListUp, true);
     }
   }
@@ -244,12 +242,10 @@ public class AppModel implements MessageHandler {
     ArrayList sortList = sort(a);
     int frontCounter = 0, rearCounter = sortList.size() - 1;
     while(frontCounter < rearCounter){
-        if(sortList.get(frontCounter) != null && sortList.get(rearCounter) != null){
-            ToDoItem tempItem = (ToDoItem)sortList.get(frontCounter);
-            sortList.set(frontCounter , sortList.set(rearCounter, tempItem));
-            frontCounter++;
-            rearCounter--;
-        }
+        ToDoItem tempItem = (ToDoItem)sortList.get(frontCounter);
+        sortList.set(frontCounter , sortList.set(rearCounter, tempItem));
+        frontCounter++;
+        rearCounter--;
     }
     return sortList;
   }
@@ -266,7 +262,7 @@ public class AppModel implements MessageHandler {
     int len = left.size() + right.size();
     for(int i = 0; i < len; i++){
         if((leftIndex < left.size()) && (rightIndex < right.size())){
-            if(left.get(leftIndex).getDate().before(right.get(rightIndex).getDate())){
+            if(left.get(leftIndex).getDate().after(right.get(rightIndex).getDate())){
                 result.add(left.get(leftIndex));
                 leftIndex++;
             }
