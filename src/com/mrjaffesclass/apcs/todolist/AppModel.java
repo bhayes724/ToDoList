@@ -93,14 +93,19 @@ public class AppModel implements MessageHandler {
         removeCompletedItems();
         messenger.notify("saved");
         messenger.notify("items", this.getItems());
+        break;
           
       case "sortDown":
-        ArrayList sortList = sort(this.getItems());
-        messenger.notify("items", sortList, true);
+        clean("down");
+        messenger.notify("saved");
+        messenger.notify("items", this.getItems(), true);
+        break;
       
       case "sortUp":
-        ArrayList sortListUp = sortUp(sort(this.getItems()));
-        messenger.notify("items", sortListUp, true);
+        clean("up");
+        messenger.notify("saved");
+        messenger.notify("items", this.getItems(), true);
+        break;
     }
   }
 
@@ -205,6 +210,30 @@ public class AppModel implements MessageHandler {
   }
   
   /**
+   * Sorts and organizes list
+   * @param method order to sort list, up or down
+   */
+  public void clean(String method){
+        ArrayList sortList = sort(toDoList);
+        ArrayList<ToDoItem> leftovers = new ArrayList();
+        toDoList.clear();
+        nextId = 0;
+        if(method.equals("up"))
+            Collections.reverse(sortList);
+        for(Object a1 : sortList){
+            ToDoItem sortItem = (ToDoItem)a1;
+            sortItem.setId(-1);
+            if(sortItem.getDate() == null)
+                leftovers.add(sortItem);
+            else
+                putItem(sortItem);
+        }
+        for(ToDoItem a : leftovers){
+            putItem(a);
+        }
+   }
+  
+  /**
    * Sorts ArrayList by date using merge method
    * @param a ArrayList of ToDoItems to be sorted
    * @return sorted ArrayList
@@ -230,25 +259,10 @@ public class AppModel implements MessageHandler {
       left = sort(left);
       right = sort(right);
       ArrayList result = merge(left, right);
-      result.addAll(leftovers);
+      result.addAll(result.size(), leftovers);
       return result;
   }
-  /**
-   * Sorts list and then inverts it
-   * @param a list to be sorted
-   * @return list sorted in reverse order
-   */
-  public ArrayList<ToDoItem> sortUp(ArrayList<ToDoItem> a){
-    ArrayList sortList = sort(a);
-    int frontCounter = 0, rearCounter = sortList.size() - 1;
-    while(frontCounter < rearCounter){
-        ToDoItem tempItem = (ToDoItem)sortList.get(frontCounter);
-        sortList.set(frontCounter , sortList.set(rearCounter, tempItem));
-        frontCounter++;
-        rearCounter--;
-    }
-    return sortList;
-  }
+  
   /**
    * Used in conjunction with sort method to sort list of items by date
    * @param left 1st half of split ArrayList
@@ -262,7 +276,7 @@ public class AppModel implements MessageHandler {
     int len = left.size() + right.size();
     for(int i = 0; i < len; i++){
         if((leftIndex < left.size()) && (rightIndex < right.size())){
-            if(left.get(leftIndex).getDate().after(right.get(rightIndex).getDate())){
+            if(left.get(leftIndex).getDate().before(right.get(rightIndex).getDate())){
                 result.add(left.get(leftIndex));
                 leftIndex++;
             }

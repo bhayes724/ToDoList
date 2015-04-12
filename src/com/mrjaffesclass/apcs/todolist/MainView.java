@@ -23,7 +23,6 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
   private final int DATE_FIELD = 3;
   
   private final int DONE_COLUMN = 0;
-  private final int DATE_COLUMN = 3;
   
   private final int DONE_FIELD_WIDTH = 65;
   private final int DESCRIPTION_FIELD_WIDTH = 475;
@@ -114,6 +113,9 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
         String dateOut = df.format(today);
         tableModel.setValueAt(dateOut, i, DATE_FIELD);
       }
+      else{
+        tableModel.setValueAt("", i, DATE_FIELD);  
+      }
       
     }
 }
@@ -139,6 +141,8 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
   
   /**
    * Creates a ToDoItem from the data in the table model
+   * @param row
+   * @return the item that was selected
    */
   private ToDoItem createItemFromTableModelRow(int row) {
     DefaultTableModel tableModel = (DefaultTableModel)jTable1.getModel();
@@ -147,7 +151,9 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
     DateFormat format = new SimpleDateFormat("EEE MM/dd");
     Date date = new Date();
     try{
-        if(dateString != null)
+        if(dateString == null || "".equals(dateString))
+          date = null;
+        else
           date = format.parse(dateString);
     } 
     catch (ParseException ex){
@@ -328,13 +334,13 @@ public class MainView extends javax.swing.JFrame implements MessageHandler {
     dialog.setVisible(true);
   }//GEN-LAST:event_aboutBtnActionPerformed
 
-    private void sortUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortUpButtonActionPerformed
-        messenger.notify("sortUp");
-    }//GEN-LAST:event_sortUpButtonActionPerformed
-
     private void sortDownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortDownButtonActionPerformed
         messenger.notify("sortDown");
     }//GEN-LAST:event_sortDownButtonActionPerformed
+
+    private void sortUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortUpButtonActionPerformed
+        messenger.notify("sortUp");
+    }//GEN-LAST:event_sortUpButtonActionPerformed
 
   /**
    * @param args the command line arguments
